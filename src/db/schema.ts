@@ -24,7 +24,7 @@ export const consultations = pgTable('consultations', {
     patientId: uuid('patient_id')
         .notNull()
         .references(() => patients.id, { onDelete: 'cascade' }),
-    consultationDate: timestamp('consultation_date').notNull(),
+    consultationDate: timestamp('consultation_date').notNull().defaultNow(),
     chiefComplaint: text('chief_complaint').notNull(),
     subjective: text('subjective').notNull(),
     objective: text('objective').notNull(),

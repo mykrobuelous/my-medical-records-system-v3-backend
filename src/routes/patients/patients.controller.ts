@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { db } from '../../db/db';
 import { consultations, patients } from '../../db/schema';
 import { patientSchema } from './patientsSchema';
-import { asc, eq } from 'drizzle-orm';
+import { asc, desc, eq } from 'drizzle-orm';
 
 export const getPatients = async (req: Request, res: Response) => {
     try {
@@ -34,7 +34,8 @@ export const getPatientById = async (req: Request, res: Response) => {
             db
                 .select()
                 .from(consultations)
-                .where(eq(consultations.patientId, id as string)),
+                .where(eq(consultations.patientId, id as string))
+                .orderBy(desc(consultations.createdAt)),
         ]);
 
         if (!patientData.length) {
